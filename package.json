@@ -1,5 +1,5 @@
 {
-  "name": "mobile-starter",
+  "name": "deadlines",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -21,9 +21,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@animatereactnative/stagger": "^0.3.0",
     "@hookform/resolvers": "^3.9.0",
-    "@react-native-community/blur": "^4.4.1",
     "@react-navigation/native": "^6.0.2",
     "@reduxjs/toolkit": "^2.2.7",
     "@shopify/flash-list": "1.6.4",

@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { CombineProviders } from "@/components/providers";
 
+SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
@@ -20,7 +21,11 @@ export default function RootLayout() {
   }
   return (
     <CombineProviders>
-      <Stack screenOptions={{ headerShown: false }} />
+      <Stack initialRouteName="index" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="welcome-screen" />
+        <Stack.Screen name="(app)" />
+      </Stack>
     </CombineProviders>
   );
 }

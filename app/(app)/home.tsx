@@ -1,5 +1,7 @@
 import LottieView from "lottie-react-native";
 import SafeArea from "@/components/utils/safe-area";
+import { useDispatch, useSelector } from "@/store/hooks";
+import { setIsShown } from "@/store/slices/welcome-screen-slice";
 import {
   Circle,
   H3,
@@ -12,6 +14,10 @@ import {
 } from "tamagui";
 
 export default function Index() {
+  const dispatch = useDispatch();
+  const isShown = useSelector((state) => state.welcomeScreen.isShown);
+  const theme = useSelector((state) => state.theme.theme);
+  console.log(isShown, theme);
   return (
     <>
       <SafeArea>
@@ -73,7 +79,7 @@ export default function Index() {
                 </YStack>
               </XStack>
             </YStack>
-            <H3>Deadlines</H3>
+            <H3 onPress={() => dispatch(setIsShown(true))}>Deadlines</H3>
             <ScrollView>
               <YStack gap="$3">
                 {Array.from({ length: 10 }).map((_, i) => (

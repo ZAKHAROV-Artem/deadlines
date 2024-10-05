@@ -6,7 +6,6 @@ export default function Index() {
   const isShown = useSelector((state) => state.welcomeScreen.isShown);
   if (isShown) {
     return <Redirect href={ROUTES.HOME} />;
-  } else {
-    return <Redirect href={ROUTES.WELCOME_SCREEN} />;
   }
+  return <Redirect href={ROUTES.WELCOME_SCREEN} />;
 }
