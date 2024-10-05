@@ -63,4 +63,5 @@ export const colors = {
   "teal-10": "#26987b", // darker than original
   white: "#ffffff",
   "white-15": "rgba(255, 255, 255, 0.15)",
+  "white-50": "rgba(255, 255, 255, 0.5)",
 };

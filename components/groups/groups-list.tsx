@@ -1,26 +1,36 @@
-import { useSelector } from "@/store/hooks";
-import { Circle, H4, XStack, YStack } from "tamagui";
+import { View, XStack, YStack } from "tamagui";
+import { FlashList } from "@shopify/flash-list";
+import { Group } from "@/types/store/slices/groups";
 
-export default function GroupsList() {
-  const groups = useSelector((state) => state.groups.groups);
+import GroupItem from "./group-item";
+
+type GroupItemProps = {
+  favoriteGroups: string[];
+  groups: Group[];
+};
+export default function GroupsList({ favoriteGroups, groups }: GroupItemProps) {
   return (
     <YStack gap="$3">
       <XStack gap="$5">
-        <YStack bg="$blue-5" br="$6" f={1} gap="$2" p="$3">
-          <Circle bg="$white" size={"$2"} />
-          <XStack jc="space-between">
-            <H4>Project</H4>
-            <H4>4</H4>
-          </XStack>
-        </YStack>
-        <YStack bg="$teal-5" br="$6" f={1} gap="$2" p="$3">
-          <Circle bg="$white" size={"$2"} />
-
-          <XStack jc="space-between">
-            <H4>Project</H4>
-            <H4>4</H4>
-          </XStack>
-        </YStack>
+        <FlashList
+          data={groups}
+          estimatedItemSize={100}
+          extraData={favoriteGroups}
+          ItemSeparatorComponent={() => <View h="$1" />}
+          numColumns={2}
+          renderItem={({ index, item }) => (
+            <View
+              f={1}
+              pl={index % 2 === 0 ? 0 : "$2"}
+              pr={index % 1 === 0 ? "$2" : 0}
+            >
+              <GroupItem
+                group={item}
+                isFavorite={favoriteGroups.includes(item.id)}
+              />
+            </View>
+          )}
+        />
       </XStack>
     </YStack>
   );

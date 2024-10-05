@@ -5,8 +5,14 @@ import { Circle, View } from "tamagui";
 import { ROUTES } from "@/constants/routes";
 import { router, usePathname } from "expo-router";
 import PlusRec from "@/components/data-display/icons/plus-rec";
-import { GroupAdd, Home, Menu, X } from "@/components/data-display/icons";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
+import {
+  GroupAdd,
+  Groups,
+  Home,
+  Menu,
+  X,
+} from "@/components/data-display/icons";
 
 export default function FloatingMenu() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -43,6 +49,31 @@ export default function FloatingMenu() {
               </Circle>
             </Animated.View>
           )}
+          {!ROUTES.GROUPS.endsWith(pathname) && (
+            <Animated.View
+              entering={FadeInDown.duration(200)}
+              exiting={FadeOutDown.duration(200)}
+            >
+              <Circle
+                borderColor={"$black"}
+                borderWidth={"$1"}
+                onPress={() => router.push(ROUTES.GROUPS)}
+                ov={"hidden"}
+                size={"$6"}
+              >
+                <BlurView
+                  intensity={70}
+                  style={{ flex: 1, width: "100%" }}
+                  tint="systemUltraThinMaterialLight"
+                >
+                  <View ai={"center"} f={1} jc={"center"}>
+                    <Groups />
+                  </View>
+                </BlurView>
+              </Circle>
+            </Animated.View>
+          )}
+
           {!ROUTES.ADD_GROUP.endsWith(pathname) && (
             <Animated.View
               entering={FadeInDown.duration(200)}

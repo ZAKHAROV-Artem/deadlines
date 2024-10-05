@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import DateTimePicker from "react-native-ui-datepicker";
-import { CalendarSearch, X } from "@/components/data-display/icons";
+import { CalendarDates, X } from "@/components/data-display/icons";
+import {
+  PrimaryButton,
+  PrimaryOutlinedButton,
+} from "@/components/inputs/buttons/primary";
 import {
   Button,
   Dialog,
@@ -31,16 +35,14 @@ export default function DatePicker({ date, setDate }: DatePickerProps) {
       <Dialog.Trigger asChild>
         <XStack
           ai={"center"}
-          borderWidth="$0.5"
-          br={"$3"}
+          borderColor={"$border"}
+          borderWidth="$1"
+          br={"$6"}
           jc={"space-between"}
-          px="$4"
-          py={"$3"}
+          p="$3.5"
         >
-          <SizableText>
-            {format(localDate || date, "MMMM dd , yyyy")}
-          </SizableText>
-          <CalendarSearch />
+          <SizableText>{format(date, "MMMM dd , yyyy")}</SizableText>
+          <CalendarDates />
         </XStack>
       </Dialog.Trigger>
 
@@ -75,9 +77,7 @@ export default function DatePicker({ date, setDate }: DatePickerProps) {
           key="content"
           w={"95%"}
         >
-          <Dialog.Title>
-            {format(localDate || date, "MMMM dd , yyyy")}
-          </Dialog.Title>
+          <Dialog.Title>{format(date, "MMMM dd , yyyy")}</Dialog.Title>
           <Dialog.Description>
             Pick up the date. Click save when you're done.
           </Dialog.Description>
@@ -94,20 +94,14 @@ export default function DatePicker({ date, setDate }: DatePickerProps) {
 
           <XStack gap="$3">
             <Dialog.Close asChild>
-              <Button aria-label="Close" bg="$primary" color={"$white"} f={1}>
+              <PrimaryOutlinedButton aria-label="Close" f={1}>
                 Cancel
-              </Button>
+              </PrimaryOutlinedButton>
             </Dialog.Close>
             <Dialog.Close asChild>
-              <Button
-                aria-label="Close"
-                bg="$primary"
-                color={"$white"}
-                f={1}
-                onPress={handleSave}
-              >
+              <PrimaryButton aria-label="Save" f={1} onPress={handleSave}>
                 Save changes
-              </Button>
+              </PrimaryButton>
             </Dialog.Close>
           </XStack>
 

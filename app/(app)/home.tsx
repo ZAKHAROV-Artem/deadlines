@@ -1,13 +1,14 @@
-import { useDispatch } from "@/store/hooks";
 import LottieView from "lottie-react-native";
 import { GroupsList } from "@/components/groups";
 import SafeArea from "@/components/utils/safe-area";
 import { DeadlinesList } from "@/components/deadlines";
+import { useDispatch, useSelector } from "@/store/hooks";
 import { H3, Image, ScrollView, View, YStack } from "tamagui";
 import { setIsShown } from "@/store/slices/welcome-screen-slice";
 
 export default function Index() {
   const dispatch = useDispatch();
+  const { favoriteGroups, groups } = useSelector((state) => state.groups);
   return (
     <>
       <SafeArea>
@@ -31,10 +32,15 @@ export default function Index() {
               pos={"absolute"}
               source={require("../../assets/images/shapes/1.png")}
             />
-            <H3>Groups</H3>
+            <H3>Favorite groups</H3>
           </View>
           <YStack gap="$2" pos={"relative"} px="$4" zIndex={2}>
-            <GroupsList />
+            <GroupsList
+              favoriteGroups={favoriteGroups}
+              groups={groups.filter((group) =>
+                favoriteGroups.includes(group.id),
+              )}
+            />
             <H3 onPress={() => dispatch(setIsShown(true))}>Deadlines</H3>
             <DeadlinesList />
           </YStack>

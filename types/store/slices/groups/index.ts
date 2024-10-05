@@ -5,5 +5,6 @@ export interface Group {
   name: string;
 }
 export interface GroupsState {
+  favoriteGroups: string[];
   groups: Group[];
 }
