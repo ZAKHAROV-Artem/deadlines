@@ -1,23 +1,13 @@
+import { useDispatch } from "@/store/hooks";
 import LottieView from "lottie-react-native";
+import { GroupsList } from "@/components/groups";
 import SafeArea from "@/components/utils/safe-area";
-import { useDispatch, useSelector } from "@/store/hooks";
+import { DeadlinesList } from "@/components/deadlines";
+import { H3, Image, ScrollView, View, YStack } from "tamagui";
 import { setIsShown } from "@/store/slices/welcome-screen-slice";
-import {
-  Circle,
-  H3,
-  H4,
-  Image,
-  ScrollView,
-  View,
-  XStack,
-  YStack,
-} from "tamagui";
 
 export default function Index() {
   const dispatch = useDispatch();
-  const isShown = useSelector((state) => state.welcomeScreen.isShown);
-  const theme = useSelector((state) => state.theme.theme);
-  console.log(isShown, theme);
   return (
     <>
       <SafeArea>
@@ -44,68 +34,9 @@ export default function Index() {
             <H3>Groups</H3>
           </View>
           <YStack gap="$2" pos={"relative"} px="$4" zIndex={2}>
-            <YStack gap="$3">
-              <XStack gap="$5">
-                <YStack bg="$blue-5" br="$6" f={1} gap="$2" p="$3">
-                  <Circle bg="$white" size={"$2"} />
-                  <XStack jc="space-between">
-                    <H4>Project</H4>
-                    <H4>4</H4>
-                  </XStack>
-                </YStack>
-                <YStack bg="$teal-5" br="$6" f={1} gap="$2" p="$3">
-                  <Circle bg="$white" size={"$2"} />
-
-                  <XStack jc="space-between">
-                    <H4>Project</H4>
-                    <H4>4</H4>
-                  </XStack>
-                </YStack>
-              </XStack>
-              <XStack gap="$5">
-                <YStack bg="$purple-5" br="$6" f={1} gap="$2" p="$3">
-                  <Circle bg="$white" size={"$2"} />
-                  <XStack jc="space-between">
-                    <H4>Project</H4>
-                    <H4>4</H4>
-                  </XStack>
-                </YStack>
-                <YStack bg="$orange-5" br="$6" f={1} gap="$2" p="$3">
-                  <Circle bg="$white" size={"$2"} />
-                  <XStack jc="space-between">
-                    <H4>Project</H4>
-                    <H4>4</H4>
-                  </XStack>
-                </YStack>
-              </XStack>
-            </YStack>
+            <GroupsList />
             <H3 onPress={() => dispatch(setIsShown(true))}>Deadlines</H3>
-            <ScrollView>
-              <YStack gap="$3">
-                {Array.from({ length: 10 }).map((_, i) => (
-                  <View
-                    borderColor={"$border"}
-                    borderWidth={"$1"}
-                    br={"$4"}
-                    h={"$8"}
-                    key={i}
-                    ov={"hidden"}
-                    p={"$3"}
-                    pos="relative"
-                  >
-                    <H3>Finish main part</H3>
-                    <View
-                      bg="$teal-5"
-                      bottom={0}
-                      left={0}
-                      p="$2"
-                      pos={"absolute"}
-                      right={0}
-                    />
-                  </View>
-                ))}
-              </YStack>
-            </ScrollView>
+            <DeadlinesList />
           </YStack>
         </ScrollView>
       </SafeArea>

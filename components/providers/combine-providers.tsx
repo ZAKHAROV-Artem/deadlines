@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { PortalProvider } from "tamagui";
 import { StatusBar } from "expo-status-bar";
 
 import RTKProvider from "./rtk-provider";
@@ -12,7 +13,7 @@ export default function CombipeProviders({ children }: CombipeProvidersProps) {
     <RTKProvider>
       <TamaguiProvider>
         <StatusBar backgroundColor="transparent" style="dark" translucent />
-        {children}
+        <PortalProvider shouldAddRootHost>{children}</PortalProvider>
       </TamaguiProvider>
     </RTKProvider>
   );

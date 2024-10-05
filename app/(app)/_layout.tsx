@@ -3,8 +3,7 @@ import { FloatingMenu } from "@/components/navigation/floating-menu";
 export default function AppLayout() {
   return (
     <>
-      <Stack screenOptions={{ headerShown: false }} />
-
+      <Stack screenOptions={{ animation: "fade", headerShown: false }} />
       <FloatingMenu />
     </>
   );

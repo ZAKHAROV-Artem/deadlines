@@ -105,13 +105,13 @@ export default function FloatingMenu() {
           tint="systemUltraThinMaterialLight"
         >
           <View ai={"center"} f={1} jc={"center"}>
-            <Animated.View
-              entering={FadeInDown.duration(150)}
-              exiting={FadeOutDown.duration(150)}
-              style={{ position: "absolute" }}
-            >
-              {isOpen ? <X /> : <Menu />}
-            </Animated.View>
+            <View animation={"quick"} opacity={isOpen ? 1 : 0} pos={"absolute"}>
+              <X />
+            </View>
+
+            <View animation={"quick"} opacity={isOpen ? 0 : 1} pos={"absolute"}>
+              <Menu />
+            </View>
           </View>
         </BlurView>
       </Circle>

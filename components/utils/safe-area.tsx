@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type SafeAreaProps = {
   children: ReactNode;
+  childrenWrapperProps?: ViewProps;
   paddings?: Partial<{
     bottom: number;
     left: number;
@@ -16,6 +17,7 @@ type SafeAreaProps = {
 };
 export default function SafeArea({
   children,
+  childrenWrapperProps,
   paddings,
   pure = false,
   statusBarBg,
@@ -32,7 +34,7 @@ export default function SafeArea({
       pt={paddings?.top ?? insets.top}
       {...wrapperProps}
     >
-      <View bg={pure ? undefined : "$bg"} f={1}>
+      <View bg={pure ? undefined : "$bg"} f={1} {...childrenWrapperProps}>
         {children}
       </View>
     </View>

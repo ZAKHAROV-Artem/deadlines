@@ -18,7 +18,7 @@ const persistConfig = {
   key: "root",
   storage: MMKVStorage,
   version: 1,
-  whitelist: ["theme", "welcomeScreen"],
+  whitelist: ["theme", "welcomeScreen", "groups", "deadlines"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
