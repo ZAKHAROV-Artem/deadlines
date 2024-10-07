@@ -1,9 +1,11 @@
 import * as Crypto from "expo-crypto";
+import useToast from "@/hooks/use-toast";
 import { Fieldset, Input } from "tamagui";
 import { useDispatch } from "@/store/hooks";
 import SafeArea from "@/components/utils/safe-area";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createGroup } from "@/store/slices/groups-slice";
+import { ColorPicker } from "@/components/inputs/color-picker";
 import { ScreenHeader } from "@/components/surfaces/screen-header";
 import { PrimaryButton } from "@/components/inputs/buttons/primary";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
@@ -16,11 +18,12 @@ export default function AddGroup() {
   const dispatch = useDispatch();
   const { control, handleSubmit, reset } = useForm<AddGroupSchemaType>({
     defaultValues: {
-      color: "#000000",
+      color: "#FFAACC",
       name: "",
     },
     resolver: zodResolver(AddGroupSchema),
   });
+  const { success } = useToast();
   const onSubmit: SubmitHandler<AddGroupSchemaType> = (data) => {
     dispatch(
       createGroup({
@@ -29,6 +32,7 @@ export default function AddGroup() {
         id: Crypto.randomUUID(),
       }),
     );
+    success("Group created successfully");
     reset();
   };
   return (
@@ -53,14 +57,7 @@ export default function AddGroup() {
           control={control}
           name="color"
           render={({ field: { onChange, value } }) => (
-            <Input
-              borderColor={"$border"}
-              borderWidth={"$1"}
-              br={"$6"}
-              onChangeText={onChange}
-              placeholder="Color"
-              value={value}
-            />
+            <ColorPicker color={value} setColor={(color) => onChange(color)} />
           )}
         />
       </Fieldset>

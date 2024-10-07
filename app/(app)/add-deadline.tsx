@@ -3,12 +3,12 @@ import { useDispatch } from "@/store/hooks";
 import SafeArea from "@/components/utils/safe-area";
 import { Fieldset, Input, TextArea } from "tamagui";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DatePicker } from "@/components/inputs/date-picker";
 import { createDeadline } from "@/store/slices/deadlines-slice";
 import GroupSelect from "@/components/inputs/select/group-select";
 import { ScreenHeader } from "@/components/surfaces/screen-header";
 import { PrimaryButton } from "@/components/inputs/buttons/primary";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { DatePicker } from "@/components/feedback/dialogs/date-picker";
 import {
   AddDeadlineSchema,
   AddDeadlineSchemaType,

@@ -21,107 +21,103 @@ export default function FloatingMenu() {
     setIsOpen(!isOpen);
   };
 
+  const handlePress = (to: ROUTES) => {
+    if (!to.endsWith(pathname)) router.push(to);
+  };
+
   return (
     <YStack bottom={10} gap="$3" pos={"absolute"} right={5}>
       {isOpen && (
         <>
-          {!ROUTES.ADD_DEADLINE.endsWith(pathname) && (
-            <Animated.View
-              entering={FadeInDown.duration(200)}
-              exiting={FadeOutDown.duration(200)}
+          <Animated.View
+            entering={FadeInDown.delay(3 * 100).duration(200)}
+            exiting={FadeOutDown.delay(0 * 100).duration(200)}
+          >
+            <Circle
+              borderColor={"$black"}
+              borderWidth={"$1"}
+              onPress={() => handlePress(ROUTES.ADD_DEADLINE)}
+              ov={"hidden"}
+              size={"$6"}
             >
-              <Circle
-                borderColor={"$black"}
-                borderWidth={"$1"}
-                onPress={() => router.push(ROUTES.ADD_DEADLINE)}
-                ov={"hidden"}
-                size={"$6"}
+              <BlurView
+                intensity={70}
+                style={{ flex: 1, width: "100%" }}
+                tint="systemUltraThinMaterialLight"
               >
-                <BlurView
-                  intensity={70}
-                  style={{ flex: 1, width: "100%" }}
-                  tint="systemUltraThinMaterialLight"
-                >
-                  <View ai={"center"} f={1} jc={"center"}>
-                    <PlusRec />
-                  </View>
-                </BlurView>
-              </Circle>
-            </Animated.View>
-          )}
-          {!ROUTES.GROUPS.endsWith(pathname) && (
-            <Animated.View
-              entering={FadeInDown.duration(200)}
-              exiting={FadeOutDown.duration(200)}
+                <View ai={"center"} f={1} jc={"center"}>
+                  <PlusRec />
+                </View>
+              </BlurView>
+            </Circle>
+          </Animated.View>
+          <Animated.View
+            entering={FadeInDown.delay(2 * 100).duration(200)}
+            exiting={FadeOutDown.delay(1 * 100).duration(200)}
+          >
+            <Circle
+              borderColor={"$black"}
+              borderWidth={"$1"}
+              onPress={() => handlePress(ROUTES.GROUPS)}
+              ov={"hidden"}
+              size={"$6"}
             >
-              <Circle
-                borderColor={"$black"}
-                borderWidth={"$1"}
-                onPress={() => router.push(ROUTES.GROUPS)}
-                ov={"hidden"}
-                size={"$6"}
+              <BlurView
+                intensity={70}
+                style={{ flex: 1, width: "100%" }}
+                tint="systemUltraThinMaterialLight"
               >
-                <BlurView
-                  intensity={70}
-                  style={{ flex: 1, width: "100%" }}
-                  tint="systemUltraThinMaterialLight"
-                >
-                  <View ai={"center"} f={1} jc={"center"}>
-                    <Groups />
-                  </View>
-                </BlurView>
-              </Circle>
-            </Animated.View>
-          )}
+                <View ai={"center"} f={1} jc={"center"}>
+                  <Groups />
+                </View>
+              </BlurView>
+            </Circle>
+          </Animated.View>
 
-          {!ROUTES.ADD_GROUP.endsWith(pathname) && (
-            <Animated.View
-              entering={FadeInDown.duration(200)}
-              exiting={FadeOutDown.duration(200)}
+          <Animated.View
+            entering={FadeInDown.delay(1 * 100).duration(200)}
+            exiting={FadeOutDown.delay(2 * 100).duration(200)}
+          >
+            <Circle
+              borderColor={"$black"}
+              borderWidth={"$1"}
+              onPress={() => handlePress(ROUTES.ADD_GROUP)}
+              ov={"hidden"}
+              size={"$6"}
             >
-              <Circle
-                borderColor={"$black"}
-                borderWidth={"$1"}
-                onPress={() => router.push(ROUTES.ADD_GROUP)}
-                ov={"hidden"}
-                size={"$6"}
+              <BlurView
+                intensity={70}
+                style={{ flex: 1, width: "100%" }}
+                tint="systemUltraThinMaterialLight"
               >
-                <BlurView
-                  intensity={70}
-                  style={{ flex: 1, width: "100%" }}
-                  tint="systemUltraThinMaterialLight"
-                >
-                  <View ai={"center"} f={1} jc={"center"}>
-                    <GroupAdd />
-                  </View>
-                </BlurView>
-              </Circle>
-            </Animated.View>
-          )}
-          {!ROUTES.HOME.endsWith(pathname) && (
-            <Animated.View
-              entering={FadeInDown.duration(200)}
-              exiting={FadeOutDown.duration(200)}
+                <View ai={"center"} f={1} jc={"center"}>
+                  <GroupAdd />
+                </View>
+              </BlurView>
+            </Circle>
+          </Animated.View>
+          <Animated.View
+            entering={FadeInDown.delay(0 * 100).duration(200)}
+            exiting={FadeOutDown.delay(3 * 100).duration(200)}
+          >
+            <Circle
+              borderColor={"$black"}
+              borderWidth={"$1"}
+              onPress={() => handlePress(ROUTES.HOME)}
+              ov={"hidden"}
+              size={"$6"}
             >
-              <Circle
-                borderColor={"$black"}
-                borderWidth={"$1"}
-                onPress={() => router.push(ROUTES.HOME)}
-                ov={"hidden"}
-                size={"$6"}
+              <BlurView
+                intensity={70}
+                style={{ flex: 1, width: "100%" }}
+                tint="systemUltraThinMaterialLight"
               >
-                <BlurView
-                  intensity={70}
-                  style={{ flex: 1, width: "100%" }}
-                  tint="systemUltraThinMaterialLight"
-                >
-                  <View ai={"center"} f={1} jc={"center"}>
-                    <Home />
-                  </View>
-                </BlurView>
-              </Circle>
-            </Animated.View>
-          )}
+                <View ai={"center"} f={1} jc={"center"}>
+                  <Home />
+                </View>
+              </BlurView>
+            </Circle>
+          </Animated.View>
         </>
       )}
       <Circle
