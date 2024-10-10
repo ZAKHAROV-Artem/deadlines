@@ -2,13 +2,11 @@ import { useDispatch } from "@/store/hooks";
 import LottieView from "lottie-react-native";
 import { FlashList } from "@shopify/flash-list";
 import { DIALOGS } from "@/types/enums/dialogs";
+import { SizableText, View, YStack } from "tamagui";
 import { Deadline } from "@/types/store/slices/deadlines";
 import { openDialog } from "@/store/slices/dialogs-slice";
-import { ScrollView, SizableText, View, YStack } from "tamagui";
 
 import DeadlineItem from "./deadline-item";
-import DeadlinesDetails from "../feedback/dialogs/deadline-details";
-import ConfirmActionDialog from "../feedback/dialogs/confirm-action-dialog";
 
 type DeadlineItemProps = {
   deadlines: Deadline[];
@@ -21,7 +19,7 @@ export default function DeadlinesList({ deadlines }: DeadlineItemProps) {
     );
   };
   return (
-    <ScrollView>
+    <>
       {/* <View pos={"relative"} rotateZ="180deg">
         <LottieView
           autoPlay
@@ -72,10 +70,9 @@ export default function DeadlinesList({ deadlines }: DeadlineItemProps) {
               onPress={() => handleOpenDeadlineDetails(item)}
             />
           )}
+          showsVerticalScrollIndicator={false}
         />
       </YStack>
-      <DeadlinesDetails />
-      <ConfirmActionDialog />
-    </ScrollView>
+    </>
   );
 }

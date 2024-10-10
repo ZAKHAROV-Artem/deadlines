@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import Dialogs from "@/components/feedback/dialogs";
 import { CombineProviders } from "@/components/providers";
 
 SplashScreen.preventAutoHideAsync();
@@ -26,6 +27,7 @@ export default function RootLayout() {
         <Stack.Screen name="welcome-screen" />
         <Stack.Screen name="(app)" />
       </Stack>
+      <Dialogs />
     </CombineProviders>
   );
 }

@@ -22,12 +22,22 @@ const initialState: DialogsSliceState = {
     data: null,
     open: false,
   },
+  groupDetails: {
+    data: null,
+    open: false,
+  },
 };
 
 const dialogsSlice = createSlice({
   initialState,
   name: "dialogs",
   reducers: {
+    closeAllDialogs: (state: DialogsSliceState) => {
+      for (const dialog in state) {
+        state[dialog].open = false;
+      }
+    },
+
     closeDialog: (state: DialogsSliceState, action: PayloadAction<DIALOGS>) => {
       const dialogName = action.payload;
       if (state[dialogName]) {
@@ -46,7 +56,6 @@ const dialogsSlice = createSlice({
         state[dialogName].data = data;
       }
     },
-
     setDialogOpen: (
       state: DialogsSliceState,
       action: PayloadAction<{
@@ -66,6 +75,7 @@ const dialogsSlice = createSlice({
   },
 });
 
-export const { closeDialog, openDialog, setDialogOpen } = dialogsSlice.actions;
+export const { closeAllDialogs, closeDialog, openDialog, setDialogOpen } =
+  dialogsSlice.actions;
 
 export default dialogsSlice.reducer;

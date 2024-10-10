@@ -1,6 +1,5 @@
 export interface Group {
   color: string;
-  deadLinesIds: string[];
   id: string;
   name: string;
 }

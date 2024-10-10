@@ -1,13 +1,15 @@
-import { format } from "date-fns";
 import { router } from "expo-router";
 import { ROUTES } from "@/constants/routes";
 import { DIALOGS } from "@/types/enums/dialogs";
 import { X } from "@/components/data-display/icons";
-import { useTimeLeft } from "@/hooks/use-time-left";
+import { Group } from "@/types/store/slices/groups";
+import { DeadlinesList } from "@/components/deadlines";
 import { useDispatch, useSelector } from "@/store/hooks";
-import { Deadline } from "@/types/store/slices/deadlines";
-import { DonutChart } from "@/components/data-display/charts";
-import { useCountProgress } from "@/hooks/use-count-progress";
+import {
+  closeDialog,
+  DialogState,
+  setDialogOpen,
+} from "@/store/slices/dialogs-slice";
 import {
   PrimaryButton,
   PrimaryOutlinedButton,
@@ -22,42 +24,27 @@ import {
   XStack,
   YStack,
 } from "tamagui";
-import {
-  closeAllDialogs,
-  closeDialog,
-  DialogState,
-  setDialogOpen,
-} from "@/store/slices/dialogs-slice";
 
-const mockDeadline: Deadline = {
+const mockGroup: Group = {
   color: "#FFAACC",
-  description: "",
-  due: "2022-09-01T00:00:00.000Z",
-  groupIds: [],
   id: "1",
-  title: "",
+  name: "",
 };
-export default function DeadlinesDetails() {
+export default function GroupDetails() {
   const dispatch = useDispatch();
-  const { data, open }: DialogState<Deadline> = useSelector(
-    (state) => state.dialogs.deadlineDetails,
+  const { data, open }: DialogState<Group> = useSelector(
+    (state) => state.dialogs.groupDetails,
   );
-  const deadline = data || mockDeadline;
-  const progress = useCountProgress(deadline?.due as string);
-  const timeLeft = useTimeLeft(deadline?.due as string);
+  const deadlines = useSelector((state) => state.deadlines.deadlines).filter(
+    (deadline) => deadline.groupIds.includes(data?.id || ""),
+  );
+  const group = data || mockGroup;
 
-  const handleClose = () => dispatch(closeDialog(DIALOGS.DEADLINE_DETAILS));
+  const handleClose = () => dispatch(closeDialog(DIALOGS.GROUP_DETAILS));
   const handleOpenChange = (open: boolean) => {
-    dispatch(setDialogOpen({ dialogName: DIALOGS.DEADLINE_DETAILS, open }));
+    dispatch(setDialogOpen({ dialogName: DIALOGS.GROUP_DETAILS, open }));
   };
 
-  const handleEditPress = () => {
-    dispatch(closeAllDialogs());
-    router.push({
-      params: { id: deadline.id },
-      pathname: ROUTES.EDIT_DEADLINE,
-    });
-  };
   return (
     <Dialog modal onOpenChange={handleOpenChange} open={open}>
       <Dialog.Portal>
@@ -92,43 +79,48 @@ export default function DeadlinesDetails() {
           maxHeight={"90%"}
           w={"95%"}
         >
-          <Dialog.Title>Dedline details</Dialog.Title>
+          <Dialog.Title>Group details</Dialog.Title>
           <ScrollView showsVerticalScrollIndicator={false}>
             <YStack gap="$5">
               <YStack gap="$3">
                 <XStack gap="$3" jc="space-between">
-                  <H5>Title:</H5>
-                  <H5 maxWidth={"80%"}>{deadline.title}</H5>
+                  <H5>Name:</H5>
+                  <H5 maxWidth={"80%"}>{group.name}</H5>
                 </XStack>
                 <XStack gap="$3" jc="space-between">
-                  <H5>Desc:</H5>
-                  <H5 maxWidth={"80%"}>
-                    {deadline?.description || "No description"}
+                  <H5>Color:</H5>
+                  <H5 bg={group.color} br="$2" maxWidth={"80%"} px="$2">
+                    {group?.color || "No description"}
                   </H5>
                 </XStack>
-                <XStack gap="$3" jc="space-between">
-                  <H5>Due:</H5>
-                  <H5 maxWidth={"80%"}>{format(deadline.due, "PPpp")}</H5>
+                <XStack gap="$3">
+                  <Dialog.Close asChild>
+                    <PrimaryButton
+                      alignSelf="flex-start"
+                      aria-label="Edit group"
+                      onPress={() =>
+                        router.push({
+                          params: { id: group.id },
+                          pathname: ROUTES.EDIT_GROUP,
+                        })
+                      }
+                    >
+                      Edit group
+                    </PrimaryButton>
+                  </Dialog.Close>
+                  <Dialog.Close asChild>
+                    <PrimaryButton
+                      alignSelf="flex-start"
+                      aria-label="Add group"
+                      onPress={() => router.push(ROUTES.ADD_GROUP)}
+                    >
+                      Add group
+                    </PrimaryButton>
+                  </Dialog.Close>
                 </XStack>
-                <Dialog.Close asChild>
-                  <PrimaryButton
-                    alignSelf="flex-start"
-                    aria-label="Edit deadline"
-                    onPress={handleEditPress}
-                  >
-                    Edit deadline
-                  </PrimaryButton>
-                </Dialog.Close>
               </YStack>
-              <XStack jc="center">
-                <DonutChart
-                  completePercentage={progress}
-                  radius={140}
-                  strokeWidth={25}
-                >
-                  <H4>{`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m ${timeLeft.seconds}s`}</H4>
-                </DonutChart>
-              </XStack>
+              <H4>Deadlines</H4>
+              <DeadlinesList deadlines={deadlines} />
             </YStack>
           </ScrollView>
           <Dialog.Close asChild>

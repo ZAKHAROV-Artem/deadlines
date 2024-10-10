@@ -6,11 +6,11 @@ import { ROUTES } from "@/constants/routes";
 import { useDispatch } from "@/store/hooks";
 import { DIALOGS } from "@/types/enums/dialogs";
 import { Deadline } from "@/types/store/slices/deadlines";
-import { openDialog } from "@/store/slices/dialogs-slice";
 import { Edit, Trash } from "@/components/data-display/icons";
 import { useCountProgress } from "@/hooks/use-count-progress";
 import { ProgressBar2 } from "@/components/data-display/charts";
 import { deleteDeadline } from "@/store/slices/deadlines-slice";
+import { closeAllDialogs, openDialog } from "@/store/slices/dialogs-slice";
 import {
   Circle,
   H4,
@@ -45,6 +45,13 @@ export default function DeadlineItem({ deadline, onPress }: DeadlineItemProps) {
       }),
     );
   };
+  const handleEditPress = () => {
+    dispatch(closeAllDialogs());
+    router.push({
+      params: { id: deadline.id },
+      pathname: ROUTES.EDIT_DEADLINE,
+    });
+  };
   return (
     <XStack
       ai={"center"}
@@ -76,15 +83,7 @@ export default function DeadlineItem({ deadline, onPress }: DeadlineItemProps) {
           </SizableText>
         </YStack>
         <XStack gap="$2">
-          <Edit
-            onPress={() =>
-              router.push({
-                params: { id: deadline.id },
-                pathname: ROUTES.EDIT_DEADLINE,
-              })
-            }
-            stroke={theme["gray-7"].val}
-          />
+          <Edit onPress={handleEditPress} stroke={theme["gray-7"].val} />
           <Trash fill={theme["red-6"].val} onPress={handleDelete} />
         </XStack>
       </XStack>
