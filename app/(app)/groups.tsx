@@ -12,7 +12,7 @@ export default function GroupsScreen() {
           <View h={"$8"} jc={"center"} pos={"relative"} px="$4">
             <H3>All groups</H3>
           </View>
-          <YStack gap="$2" pos={"relative"} px="$4" zIndex={2}>
+          <YStack gap="$2" px="$4">
             <GroupsList favoriteGroups={favoriteGroups} groups={groups} />
           </YStack>
         </ScrollView>

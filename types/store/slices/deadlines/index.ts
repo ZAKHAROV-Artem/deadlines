@@ -1,5 +1,6 @@
 export interface Deadline {
   color: string;
+  createdAt: string;
   description: string;
   due: string;
   groupIds: string[];

@@ -1,15 +1,12 @@
 import { router } from "expo-router";
+import useToast from "@/hooks/use-toast";
 import { ROUTES } from "@/constants/routes";
 import { DIALOGS } from "@/types/enums/dialogs";
 import { X } from "@/components/data-display/icons";
 import { Group } from "@/types/store/slices/groups";
 import { DeadlinesList } from "@/components/deadlines";
 import { useDispatch, useSelector } from "@/store/hooks";
-import {
-  closeDialog,
-  DialogState,
-  setDialogOpen,
-} from "@/store/slices/dialogs-slice";
+import { deleteGroup } from "@/store/slices/groups-slice";
 import {
   PrimaryButton,
   PrimaryOutlinedButton,
@@ -24,6 +21,13 @@ import {
   XStack,
   YStack,
 } from "tamagui";
+import {
+  closeAllDialogs,
+  closeDialog,
+  DialogState,
+  openDialog,
+  setDialogOpen,
+} from "@/store/slices/dialogs-slice";
 
 const mockGroup: Group = {
   color: "#FFAACC",
@@ -43,6 +47,23 @@ export default function GroupDetails() {
   const handleClose = () => dispatch(closeDialog(DIALOGS.GROUP_DETAILS));
   const handleOpenChange = (open: boolean) => {
     dispatch(setDialogOpen({ dialogName: DIALOGS.GROUP_DETAILS, open }));
+  };
+
+  const { success } = useToast();
+  const handleDelete = () => {
+    dispatch(
+      openDialog({
+        data: {
+          onCancel: () => {},
+          onConfirm: () => {
+            dispatch(closeAllDialogs());
+            dispatch(deleteGroup(group.id));
+            success("Group deleted");
+          },
+        },
+        dialogName: DIALOGS.CONFIRM_ACTION,
+      }),
+    );
   };
 
   return (
@@ -108,15 +129,13 @@ export default function GroupDetails() {
                       Edit group
                     </PrimaryButton>
                   </Dialog.Close>
-                  <Dialog.Close asChild>
-                    <PrimaryButton
-                      alignSelf="flex-start"
-                      aria-label="Add group"
-                      onPress={() => router.push(ROUTES.ADD_GROUP)}
-                    >
-                      Add group
-                    </PrimaryButton>
-                  </Dialog.Close>
+                  <PrimaryButton
+                    alignSelf="flex-start"
+                    aria-label="Delete group"
+                    onPress={handleDelete}
+                  >
+                    Delete group
+                  </PrimaryButton>
                 </XStack>
               </YStack>
               <H4>Deadlines</H4>

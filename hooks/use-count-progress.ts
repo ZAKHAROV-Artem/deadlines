@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { differenceInMilliseconds, parseISO } from "date-fns";
 
-export const useCountProgress = (due: string) => {
-  const [progress, setProgress] = useState(0);
+export const useCountProgress = (from: string, due: string) => {
+  const [progress, setProgress] = useState(100);
 
   useEffect(() => {
-    if (!due) {
+    if (!from || !due) {
       return;
     }
+
+    const fromDate = parseISO(from);
     const dueDate = parseISO(due);
 
-    const total = differenceInMilliseconds(dueDate, new Date());
+    const total = differenceInMilliseconds(dueDate, fromDate);
 
     const interval = setInterval(() => {
       const now = new Date();
@@ -26,7 +28,7 @@ export const useCountProgress = (due: string) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [due]);
+  }, [from, due]);
 
   return progress;
 };

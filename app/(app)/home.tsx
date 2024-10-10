@@ -39,7 +39,7 @@ export default function Index() {
             top: -Constants.statusBarHeight - 5,
             transform: [{ rotate: "20deg" }],
             width: 170,
-            zIndex: 1,
+            zIndex: 0,
           }}
         />
         <Image
@@ -49,7 +49,7 @@ export default function Index() {
           top={-Constants.statusBarHeight}
         />
         <ScrollView pt="$4" showsVerticalScrollIndicator={false}>
-          <YStack gap="$2" pos={"relative"} px="$4" zIndex={2}>
+          <YStack gap="$2" pos={"relative"} px="$4" zIndex={10}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <XStack gap="$3">
                 {groups.map((group) => (

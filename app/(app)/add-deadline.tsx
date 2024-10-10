@@ -33,6 +33,7 @@ export default function AddDeadline() {
     dispatch(
       createDeadline({
         ...data,
+        createdAt: new Date().toISOString(),
         due: data.due.toISOString(),
         id: Crypto.randomUUID(),
       }),

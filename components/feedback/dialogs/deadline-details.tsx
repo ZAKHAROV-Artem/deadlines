@@ -31,6 +31,7 @@ import {
 
 const mockDeadline: Deadline = {
   color: "#FFAACC",
+  createdAt: "2022-09-01T00:00:00.000Z",
   description: "",
   due: "2022-09-01T00:00:00.000Z",
   groupIds: [],
@@ -43,7 +44,10 @@ export default function DeadlinesDetails() {
     (state) => state.dialogs.deadlineDetails,
   );
   const deadline = data || mockDeadline;
-  const progress = useCountProgress(deadline?.due as string);
+  const progress = useCountProgress(
+    deadline?.createdAt as string,
+    deadline?.due as string,
+  );
   const timeLeft = useTimeLeft(deadline?.due as string);
 
   const handleClose = () => dispatch(closeDialog(DIALOGS.DEADLINE_DETAILS));
@@ -109,6 +113,10 @@ export default function DeadlinesDetails() {
                 <XStack gap="$3" jc="space-between">
                   <H5>Due:</H5>
                   <H5 maxWidth={"80%"}>{format(deadline.due, "PPpp")}</H5>
+                </XStack>
+                <XStack gap="$3" jc="space-between">
+                  <H5>Created:</H5>
+                  <H5 maxWidth={"80%"}>{format(deadline.createdAt, "PPpp")}</H5>
                 </XStack>
                 <Dialog.Close asChild>
                   <PrimaryButton

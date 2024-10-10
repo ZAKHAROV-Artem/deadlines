@@ -11,15 +11,7 @@ import { useCountProgress } from "@/hooks/use-count-progress";
 import { ProgressBar2 } from "@/components/data-display/charts";
 import { deleteDeadline } from "@/store/slices/deadlines-slice";
 import { closeAllDialogs, openDialog } from "@/store/slices/dialogs-slice";
-import {
-  Circle,
-  H4,
-  SizableText,
-  useTheme,
-  View,
-  XStack,
-  YStack,
-} from "tamagui";
+import { Circle, H4, SizableText, useTheme, XStack, YStack } from "tamagui";
 
 type DeadlineItemProps = {
   deadline: Deadline;
@@ -27,7 +19,7 @@ type DeadlineItemProps = {
 };
 export default function DeadlineItem({ deadline, onPress }: DeadlineItemProps) {
   const theme = useTheme();
-  const progress = useCountProgress(deadline.due);
+  const progress = useCountProgress(deadline.createdAt, deadline.due);
   const { success } = useToast();
   const dispatch = useDispatch();
 
@@ -53,27 +45,31 @@ export default function DeadlineItem({ deadline, onPress }: DeadlineItemProps) {
     });
   };
   return (
-    <XStack
-      ai={"center"}
-      bg={"$bg"}
-      borderColor={"$border"}
-      borderWidth={"$1"}
-      br={"$7"}
-      onPress={onPress}
-      ov={"hidden"}
-      pos="relative"
-      px={"$4"}
-      py={"$3"}
-    >
-      <View f={1} left="$2" pos={"absolute"} right="$2" top="$2">
-        <ProgressBar2 progress={progress} />
-      </View>
+    <YStack pb="$3" pos={"relative"}>
+      <YStack
+        borderColor={"$border"}
+        borderWidth={"$1"}
+        br={"$7"}
+        h="$7"
+        jc="flex-end"
+        ov={"hidden"}
+        pos={"absolute"}
+        top={"$5"}
+        w={"100%"}
+      >
+        <ProgressBar2 br={"$6"} progress={progress} />
+      </YStack>
       <XStack
         ai="center"
+        bg={"$bg"}
+        borderColor={"$border"}
+        borderWidth={"$1"}
+        br={"$7"}
         jc={"space-between"}
-        pos={"relative"}
+        onPress={onPress}
+        px={"$4"}
+        py={"$3"}
         w="100%"
-        zIndex={2}
       >
         <Circle borderColor={"$border"} borderWidth="$1" size="$2" />
         <YStack>
@@ -87,6 +83,6 @@ export default function DeadlineItem({ deadline, onPress }: DeadlineItemProps) {
           <Trash fill={theme["red-6"].val} onPress={handleDelete} />
         </XStack>
       </XStack>
-    </XStack>
+    </YStack>
   );
 }
