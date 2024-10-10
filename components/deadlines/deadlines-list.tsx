@@ -1,17 +1,25 @@
-import { Dimensions } from "react-native";
-import { useSelector } from "@/store/hooks";
+import { useDispatch } from "@/store/hooks";
 import LottieView from "lottie-react-native";
 import { FlashList } from "@shopify/flash-list";
-import { LinearGradient } from "tamagui/linear-gradient";
+import { DIALOGS } from "@/types/enums/dialogs";
 import { Deadline } from "@/types/store/slices/deadlines";
+import { openDialog } from "@/store/slices/dialogs-slice";
 import { ScrollView, SizableText, View, YStack } from "tamagui";
 
 import DeadlineItem from "./deadline-item";
+import DeadlinesDetails from "../feedback/dialogs/deadline-details";
+import ConfirmActionDialog from "../feedback/dialogs/confirm-action-dialog";
 
 type DeadlineItemProps = {
   deadlines: Deadline[];
 };
 export default function DeadlinesList({ deadlines }: DeadlineItemProps) {
+  const dispatch = useDispatch();
+  const handleOpenDeadlineDetails = (deadline: Deadline) => {
+    dispatch(
+      openDialog({ data: deadline, dialogName: DIALOGS.DEADLINE_DETAILS }),
+    );
+  };
   return (
     <ScrollView>
       {/* <View pos={"relative"} rotateZ="180deg">
@@ -58,9 +66,16 @@ export default function DeadlinesList({ deadlines }: DeadlineItemProps) {
             </View>
           )}
           // ListHeaderComponent={() => <View h="$3" />}
-          renderItem={({ item }) => <DeadlineItem deadline={item} />}
+          renderItem={({ item }) => (
+            <DeadlineItem
+              deadline={item}
+              onPress={() => handleOpenDeadlineDetails(item)}
+            />
+          )}
         />
       </YStack>
+      <DeadlinesDetails />
+      <ConfirmActionDialog />
     </ScrollView>
   );
 }

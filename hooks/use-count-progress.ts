@@ -5,6 +5,9 @@ export const useCountProgress = (due: string) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    if (!due) {
+      return;
+    }
     const dueDate = parseISO(due);
 
     const total = differenceInMilliseconds(dueDate, new Date());

@@ -5,7 +5,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import rootReducer from "./reducers";
 
 const persistConfig = {
-  blacklist: [],
+  blacklist: ["dialogs"],
   key: "root",
   storage: MMKVStorage,
   version: 1,

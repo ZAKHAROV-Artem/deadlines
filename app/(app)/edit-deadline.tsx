@@ -1,11 +1,11 @@
-import * as Crypto from "expo-crypto";
 import useToast from "@/hooks/use-toast";
-import { useDispatch } from "@/store/hooks";
+import { useLocalSearchParams } from "expo-router";
 import SafeArea from "@/components/utils/safe-area";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch, useSelector } from "@/store/hooks";
 import { DatePicker } from "@/components/inputs/date-picker";
 import { ColorPicker } from "@/components/inputs/color-picker";
-import { createDeadline } from "@/store/slices/deadlines-slice";
+import { updateDeadline } from "@/store/slices/deadlines-slice";
 import GroupSelect from "@/components/inputs/select/group-select";
 import { ScreenHeader } from "@/components/surfaces/screen-header";
 import { PrimaryButton } from "@/components/inputs/buttons/primary";
@@ -16,34 +16,39 @@ import {
   AddDeadlineSchemaType,
 } from "@/types/validation/add-deadline";
 
-export default function AddDeadline() {
+export default function EditDeadline() {
+  const { id } = useLocalSearchParams();
+  const deadline = useSelector((state) =>
+    state.deadlines.deadlines.find((deadline) => deadline.id === id),
+  );
   const dispatch = useDispatch();
-  const { control, handleSubmit, reset } = useForm<AddDeadlineSchemaType>({
+  const { control, handleSubmit } = useForm<AddDeadlineSchemaType>({
     defaultValues: {
-      color: "#8b99ff",
-      description: "",
-      due: new Date(),
-      groupIds: [],
-      title: "",
+      color: deadline?.color,
+      description: deadline?.description,
+      due: new Date(deadline?.due as string),
+      groupIds: deadline?.groupIds,
+      title: deadline?.title,
     },
     resolver: zodResolver(AddDeadlineSchema),
   });
   const { success } = useToast();
-  const onSubmit: SubmitHandler<AddDeadlineSchemaType> = (data) => {
+  const onSubmit: SubmitHandler<AddDeadlineSchemaType> = (updatedData) => {
     dispatch(
-      createDeadline({
-        ...data,
-        due: data.due.toISOString(),
-        id: Crypto.randomUUID(),
+      updateDeadline({
+        data: {
+          ...updatedData,
+          due: updatedData.due.toISOString(),
+        },
+        id: deadline?.id as string,
       }),
     );
-    success("Deadline created successfully");
-    reset();
+    success("Deadline updated successfully");
   };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeArea childrenWrapperProps={{ gap: "$6", px: "$3" }}>
-        <ScreenHeader showLeftAction size="sm" title="Add deadline" />
+        <ScreenHeader showLeftAction size="sm" title="Update deadline" />
         <YStack gap="$5">
           <Fieldset gap="$3">
             <H4>Title</H4>
@@ -113,7 +118,7 @@ export default function AddDeadline() {
             />
           </Fieldset>
           <PrimaryButton onPress={handleSubmit(onSubmit)} size={"$5"}>
-            Add deadline
+            Save changes
           </PrimaryButton>
         </YStack>
       </SafeArea>

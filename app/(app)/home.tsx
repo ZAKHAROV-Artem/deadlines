@@ -10,7 +10,7 @@ import { setIsShown } from "@/store/slices/welcome-screen-slice";
 export default function Index() {
   const dispatch = useDispatch();
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  const { favoriteGroups, groups } = useSelector((state) => state.groups);
+  const groups = useSelector((state) => state.groups.groups);
   const deadlines = useSelector((state) => state.deadlines.deadlines);
   const selectedDeadlines =
     selectedGroups.length === 0

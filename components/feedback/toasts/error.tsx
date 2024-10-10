@@ -1,4 +1,4 @@
-import { H5, View } from "tamagui";
+import { SizableText, View } from "tamagui";
 
 type ErrorToastProps = {
   message: string;
@@ -13,9 +13,9 @@ export default function ErrorToast({ message }: ErrorToastProps) {
       px={"$5"}
       py={"$3"}
     >
-      <H5 color={"$white"} fontWeight={"700"}>
+      <SizableText color={"$white"} fontWeight={"700"}>
         {message}
-      </H5>
+      </SizableText>
     </View>
   );
 }
