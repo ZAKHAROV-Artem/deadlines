@@ -1,7 +1,7 @@
 export interface Deadline {
   color: string;
   description: string;
-  due: Date;
+  due: string;
   groupIds: string[];
   id: string;
   title: string;

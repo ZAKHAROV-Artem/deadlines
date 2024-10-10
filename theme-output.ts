@@ -3,6 +3,7 @@ type Theme = {
   border: string;
   muted: string;
   primary: string;
+  primaryLight: string;
   textAccent: string;
   textMuted: string;
   textPrimary: string;
@@ -15,13 +16,22 @@ function t(a: [number, number][]) {
   }
   return res as Theme;
 }
-const vs = ["#ffffff", "#d5d5d5", "#757575", "#7c38d8", "#2D2D2D", "#000000"];
+const vs = [
+  "#ffffff",
+  "#d5d5d5",
+  "#757575",
+  "#7c38d8",
+  "#f6ebff",
+  "#2D2D2D",
+  "#000000",
+];
 
 const ks = [
   "bg",
   "border",
   "muted",
   "primary",
+  "primaryLight",
   "textAccent",
   "textMuted",
   "textPrimary",
@@ -33,8 +43,9 @@ const n1 = t([
   [2, 2],
   [3, 3],
   [4, 4],
-  [5, 2],
-  [6, 5],
+  [5, 5],
+  [6, 2],
+  [7, 6],
 ]);
 
 export const light = n1;

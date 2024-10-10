@@ -11,6 +11,7 @@ const palettes = {
     colors.black,
     colors["gray-10"],
     colors["gray-7"],
+    colors["purple-1"],
   ],
 };
 const templates = {
@@ -19,6 +20,7 @@ const templates = {
     border: 2,
     muted: 3,
     primary: 1,
+    primaryLight: 7,
     textAccent: 5,
     textMuted: 6,
     textPrimary: 4,

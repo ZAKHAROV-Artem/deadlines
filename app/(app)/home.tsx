@@ -1,14 +1,30 @@
+import { useState } from "react";
 import Constants from "expo-constants";
 import LottieView from "lottie-react-native";
-import { GroupsList } from "@/components/groups";
+import { GroupItem } from "@/components/groups";
 import SafeArea from "@/components/utils/safe-area";
 import { DeadlinesList } from "@/components/deadlines";
 import { useDispatch, useSelector } from "@/store/hooks";
-import { H3, Image, ScrollView, View, YStack } from "tamagui";
+import { H3, Image, ScrollView, XStack, YStack } from "tamagui";
 import { setIsShown } from "@/store/slices/welcome-screen-slice";
 export default function Index() {
   const dispatch = useDispatch();
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const { favoriteGroups, groups } = useSelector((state) => state.groups);
+  const deadlines = useSelector((state) => state.deadlines.deadlines);
+  const selectedDeadlines =
+    selectedGroups.length === 0
+      ? deadlines
+      : deadlines.filter((deadline) =>
+          deadline.groupIds.some((id) => selectedGroups.includes(id)),
+        );
+  const handleAddGroupFilter = (groupId: string) => {
+    if (selectedGroups.includes(groupId)) {
+      setSelectedGroups(selectedGroups.filter((id) => id !== groupId));
+    } else {
+      setSelectedGroups([...selectedGroups, groupId]);
+    }
+  };
   return (
     <>
       <SafeArea>
@@ -32,19 +48,25 @@ export default function Index() {
           source={require("../../assets/images/shapes/1.png")}
           top={-Constants.statusBarHeight}
         />
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View h={"$8"} jc={"center"} pos={"relative"} px="$4">
-            <H3>Favorite groups</H3>
-          </View>
+        <ScrollView pt="$4" showsVerticalScrollIndicator={false}>
           <YStack gap="$2" pos={"relative"} px="$4" zIndex={2}>
-            <GroupsList
-              favoriteGroups={favoriteGroups}
-              groups={groups.filter((group) =>
-                favoriteGroups.includes(group.id),
-              )}
-            />
-            <H3 onPress={() => dispatch(setIsShown(true))}>Deadlines</H3>
-            <DeadlinesList />
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <XStack gap="$3">
+                {groups.map((group) => (
+                  <GroupItem
+                    group={group}
+                    isSelected={selectedGroups.includes(group.id)}
+                    key={group.id}
+                    onPress={() => handleAddGroupFilter(group.id)}
+                  />
+                ))}
+              </XStack>
+            </ScrollView>
+            <XStack jc="space-between">
+              <H3 onPress={() => dispatch(setIsShown(true))}>Deadlines</H3>
+              <H3>{selectedDeadlines.length}</H3>
+            </XStack>
+            <DeadlinesList deadlines={selectedDeadlines} />
           </YStack>
         </ScrollView>
       </SafeArea>

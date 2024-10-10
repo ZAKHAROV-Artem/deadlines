@@ -18,9 +18,14 @@ import {
 type DatePickerProps = {
   date: Date;
   setDate: (date: Date) => void;
+  withTime?: boolean;
 };
 
-export default function DatePicker({ date, setDate }: DatePickerProps) {
+export default function DatePicker({
+  date,
+  setDate,
+  withTime = false,
+}: DatePickerProps) {
   const [open, setOpen] = useState<boolean>(false);
   const [localDate, setLocalDate] = useState<Date>(date);
 
@@ -89,6 +94,7 @@ export default function DatePicker({ date, setDate }: DatePickerProps) {
               params.date && setLocalDate(new Date(params.date.toString()))
             }
             selectedItemColor={theme.primary.val}
+            timePicker={withTime}
             todayTextStyle={{ color: theme.textPrimary.val }}
           />
 

@@ -14,7 +14,7 @@ export default function GroupsList({ favoriteGroups, groups }: GroupItemProps) {
       <XStack gap="$5">
         <FlashList
           data={groups}
-          estimatedItemSize={100}
+          estimatedItemSize={106}
           extraData={favoriteGroups}
           ItemSeparatorComponent={() => <View h="$1" />}
           numColumns={2}
@@ -24,10 +24,7 @@ export default function GroupsList({ favoriteGroups, groups }: GroupItemProps) {
               pl={index % 2 === 0 ? 0 : "$2"}
               pr={index % 1 === 0 ? "$2" : 0}
             >
-              <GroupItem
-                group={item}
-                isFavorite={favoriteGroups.includes(item.id)}
-              />
+              <GroupItem group={item} />
             </View>
           )}
         />
