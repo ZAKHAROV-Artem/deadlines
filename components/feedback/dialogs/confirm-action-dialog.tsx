@@ -67,7 +67,7 @@ export default function ConfirmActionDialog() {
           maxHeight={"90%"}
           w={"95%"}
         >
-          <Dialog.Title size={"$9"} ta={"center"}>
+          <Dialog.Title size={"$7"} ta={"center"}>
             Are you sure you want to do this?
           </Dialog.Title>
 

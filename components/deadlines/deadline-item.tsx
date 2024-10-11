@@ -75,7 +75,7 @@ export default function DeadlineItem({ deadline, onPress }: DeadlineItemProps) {
         <YStack>
           <H4>{cutText(deadline.title, 20)}</H4>
           <SizableText>
-            Due: {format(deadline.due, "MMMM dd, yyyy HH:MM")}
+            Due: {format(deadline.due, "MMMM dd, yyyy HH:mm")}
           </SizableText>
         </YStack>
         <XStack gap="$2">
