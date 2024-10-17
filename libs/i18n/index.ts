@@ -16,17 +16,17 @@ import translationEs from "@/assets/locales/es_ES/translation.json";
 import MMKVStorage from "../mmkv-storage";
 
 const resources = {
-  cs_CZ: { translation: translationCz },
-  de_DE: { translation: translationDe },
-  en_US: { translation: translationEn },
-  es_ES: { translation: translationEs },
-  fr_FR: { translation: translationFr },
-  it_IT: { translation: translationIt },
-  ja_JP: { translation: translationJp },
-  pl_PL: { translation: translationPl },
-  sk_SK: { translation: translationSk },
-  uk_UA: { translation: translationUa },
-  zh_CN: { translation: translationCn },
+  "cs-CZ": { translation: translationCz },
+  "de-DE": { translation: translationDe },
+  "en-US": { translation: translationEn },
+  "es-ES": { translation: translationEs },
+  "fr-FR": { translation: translationFr },
+  "it-IT": { translation: translationIt },
+  "ja-JP": { translation: translationJp },
+  "pl-PL": { translation: translationPl },
+  "sk-SK": { translation: translationSk },
+  "uk-UA": { translation: translationUa },
+  "zh-CN": { translation: translationCn },
 };
 
 const initI18n = async () => {
@@ -34,12 +34,14 @@ const initI18n = async () => {
 
   if (!savedLanguage) {
     const locales = Localization.getLocales();
-    savedLanguage = locales.length > 0 ? locales[0].languageTag : "en_US";
+    savedLanguage = locales.length > 0 ? locales[0].languageTag : "en-US";
+
+    await MMKVStorage.setItem("language", savedLanguage);
   }
 
   i18n.use(initReactI18next).init({
     compatibilityJSON: "v3",
-    fallbackLng: "en_US",
+    fallbackLng: "en-US",
     interpolation: {
       escapeValue: false,
     },

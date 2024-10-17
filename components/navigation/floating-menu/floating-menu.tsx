@@ -104,28 +104,6 @@ export default function FloatingMenu() {
             <Circle
               borderColor={"$black"}
               borderWidth={"$1"}
-              onPress={() => handlePress(ROUTES.HOME)}
-              ov={"hidden"}
-              size={"$6"}
-            >
-              <BlurView
-                intensity={70}
-                style={{ flex: 1, width: "100%" }}
-                tint="systemUltraThinMaterialLight"
-              >
-                <View ai={"center"} f={1} jc={"center"}>
-                  <Home />
-                </View>
-              </BlurView>
-            </Circle>
-          </Animated.View>
-          <Animated.View
-            entering={FadeInDown.delay(0 * 100).duration(200)}
-            exiting={FadeOutDown.delay(4 * 100).duration(200)}
-          >
-            <Circle
-              borderColor={"$black"}
-              borderWidth={"$1"}
               onPress={() => handlePress(ROUTES.SETTINGS)}
               ov={"hidden"}
               size={"$6"}
@@ -137,6 +115,28 @@ export default function FloatingMenu() {
               >
                 <View ai={"center"} f={1} jc={"center"}>
                   <Settings />
+                </View>
+              </BlurView>
+            </Circle>
+          </Animated.View>
+          <Animated.View
+            entering={FadeInDown.delay(0 * 100).duration(200)}
+            exiting={FadeOutDown.delay(4 * 100).duration(200)}
+          >
+            <Circle
+              borderColor={"$black"}
+              borderWidth={"$1"}
+              onPress={() => handlePress(ROUTES.HOME)}
+              ov={"hidden"}
+              size={"$6"}
+            >
+              <BlurView
+                intensity={70}
+                style={{ flex: 1, width: "100%" }}
+                tint="systemUltraThinMaterialLight"
+              >
+                <View ai={"center"} f={1} jc={"center"}>
+                  <Home />
                 </View>
               </BlurView>
             </Circle>
