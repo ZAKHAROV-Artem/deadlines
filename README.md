@@ -1,21 +1,11 @@
-# Expo Mobile Starter
+# Deadlines
 
-This project is a mobile app starter built with Expo, offering a highly customizable and scalable foundation for React Native development.
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/349207ab-7d89-4696-b94f-29b7ded2ed56" alt="Image 1"></td>
+    <td><img src="https://github.com/user-attachments/assets/0771fab6-d265-493e-890c-cb0f5a8f64d9" alt="Image 2"></td>
+    <td><img src="https://github.com/user-attachments/assets/ccc06846-cbdf-4b33-b108-9ea3ea7f857c" alt="Image 3"></td>
+    <td><img src="https://github.com/user-attachments/assets/58baeccf-1273-4f79-96d3-82641400cecf" alt="Image 4"></td>
+  </tr>
+</table>
 
-## ✨ Features 
-- 🧹 ESLint & Prettier: Configured for consistent code formatting and linting to ensure code quality.
-- 🔒 Commitlint & Husky: Enforces commit message standards and ensures pre-commit checks run smoothly.
-- 🎨 Tamagui Integration: Preconfigured with a single customizable theme for consistent styling across the app.
-- ⚡ Redux Toolkit: Integrated with Redux for efficient state management, including persistent storage via react-native-mmkv.
-
-## 🚀 Getting Started
-- Clone the repository:
-  ```
-  git clone https://github.com/ZAKHAROV-Artem/mobile-starter
-  ```
-- Install dependencies:
-  ```
-  npm install
-  ```
-  
-  
