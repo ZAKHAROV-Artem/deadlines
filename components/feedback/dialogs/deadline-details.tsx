@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { router } from "expo-router";
 import { ROUTES } from "@/constants/routes";
+import { useTranslation } from "react-i18next";
 import { DIALOGS } from "@/types/enums/dialogs";
 import { X } from "@/components/data-display/icons";
 import { useTimeLeft } from "@/hooks/use-time-left";
@@ -39,6 +40,7 @@ const mockDeadline: Deadline = {
   title: "",
 };
 export default function DeadlinesDetails() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { data, open }: DialogState<Deadline> = useSelector(
     (state) => state.dialogs.deadlineDetails,
@@ -96,35 +98,35 @@ export default function DeadlinesDetails() {
           maxHeight={"90%"}
           w={"95%"}
         >
-          <Dialog.Title>Dedline details</Dialog.Title>
+          <Dialog.Title>{t("deadlines.details.title")}</Dialog.Title>
           <ScrollView showsVerticalScrollIndicator={false}>
             <YStack gap="$5">
               <YStack gap="$3">
                 <XStack gap="$3" jc="space-between">
-                  <H5>Title:</H5>
+                  <H5>{t("forms.labels.title")}:</H5>
                   <H5 maxWidth={"80%"}>{deadline.title}</H5>
                 </XStack>
                 <XStack gap="$3" jc="space-between">
-                  <H5>Desc:</H5>
+                  <H5>{t("forms.labels.desc")}:</H5>
                   <H5 maxWidth={"80%"}>
                     {deadline?.description || "No description"}
                   </H5>
                 </XStack>
                 <XStack gap="$3" jc="space-between">
-                  <H5>Due:</H5>
+                  <H5>{t("forms.labels.due")}:</H5>
                   <H5 maxWidth={"80%"}>{format(deadline.due, "PPpp")}</H5>
                 </XStack>
                 <XStack gap="$3" jc="space-between">
-                  <H5>Created:</H5>
+                  <H5>{t("forms.labels.created")}:</H5>
                   <H5 maxWidth={"80%"}>{format(deadline.createdAt, "PPpp")}</H5>
                 </XStack>
                 <Dialog.Close asChild>
                   <PrimaryButton
                     alignSelf="flex-start"
-                    aria-label="Edit deadline"
+                    aria-label={t("deadlines.details.edit")}
                     onPress={handleEditPress}
                   >
-                    Edit deadline
+                    {t("forms.buttons.edit")}
                   </PrimaryButton>
                 </Dialog.Close>
               </YStack>
@@ -141,7 +143,7 @@ export default function DeadlinesDetails() {
           </ScrollView>
           <Dialog.Close asChild>
             <PrimaryOutlinedButton aria-label="Close">
-              Close
+              {t("forms.buttons.close")}
             </PrimaryOutlinedButton>
           </Dialog.Close>
 

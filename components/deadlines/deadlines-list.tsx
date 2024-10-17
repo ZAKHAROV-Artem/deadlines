@@ -1,5 +1,6 @@
 import { useDispatch } from "@/store/hooks";
 import LottieView from "lottie-react-native";
+import { useTranslation } from "react-i18next";
 import { FlashList } from "@shopify/flash-list";
 import { DIALOGS } from "@/types/enums/dialogs";
 import { SizableText, View, YStack } from "tamagui";
@@ -12,6 +13,7 @@ type DeadlineItemProps = {
   deadlines: Deadline[];
 };
 export default function DeadlinesList({ deadlines }: DeadlineItemProps) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const handleOpenDeadlineDetails = (deadline: Deadline) => {
     dispatch(
@@ -59,7 +61,7 @@ export default function DeadlinesList({ deadlines }: DeadlineItemProps) {
                 style={{ height: 200, width: "100%" }}
               />
               <SizableText ta="center">
-                {`There are no deadlines yet.\nCreate one in the menu`}
+                {t("deadlines.messages.noDeadlines")}
               </SizableText>
             </View>
           )}

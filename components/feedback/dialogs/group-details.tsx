@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import useToast from "@/hooks/use-toast";
 import { ROUTES } from "@/constants/routes";
+import { useTranslation } from "react-i18next";
 import { DIALOGS } from "@/types/enums/dialogs";
 import { X } from "@/components/data-display/icons";
 import { Group } from "@/types/store/slices/groups";
@@ -35,6 +36,7 @@ const mockGroup: Group = {
   name: "",
 };
 export default function GroupDetails() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { data, open }: DialogState<Group> = useSelector(
     (state) => state.dialogs.groupDetails,
@@ -58,7 +60,7 @@ export default function GroupDetails() {
           onConfirm: () => {
             dispatch(closeAllDialogs());
             dispatch(deleteGroup(group.id));
-            success("Group deleted");
+            success(t("groups.messages.deleted"));
           },
         },
         dialogName: DIALOGS.CONFIRM_ACTION,
@@ -100,16 +102,16 @@ export default function GroupDetails() {
           maxHeight={"90%"}
           w={"95%"}
         >
-          <Dialog.Title>Group details</Dialog.Title>
+          <Dialog.Title>{t("groups.details.title")}</Dialog.Title>
           <ScrollView showsVerticalScrollIndicator={false}>
             <YStack gap="$5">
               <YStack gap="$3">
                 <XStack gap="$3" jc="space-between">
-                  <H5>Name:</H5>
+                  <H5>{t("forms.labels.name")}:</H5>
                   <H5 maxWidth={"80%"}>{group.name}</H5>
                 </XStack>
                 <XStack gap="$3" jc="space-between">
-                  <H5>Color:</H5>
+                  <H5>{t("forms.labels.color")}:</H5>
                   <H5 bg={group.color} br="$2" maxWidth={"80%"} px="$2">
                     {group?.color || "No description"}
                   </H5>
@@ -126,7 +128,7 @@ export default function GroupDetails() {
                         })
                       }
                     >
-                      Edit group
+                      {t("forms.buttons.edit")}
                     </PrimaryButton>
                   </Dialog.Close>
                   <PrimaryButton
@@ -134,17 +136,17 @@ export default function GroupDetails() {
                     aria-label="Delete group"
                     onPress={handleDelete}
                   >
-                    Delete group
+                    {t("forms.buttons.delete")}
                   </PrimaryButton>
                 </XStack>
               </YStack>
-              <H4>Deadlines</H4>
+              <H4>{t("deadlines.deadlines")}</H4>
               <DeadlinesList deadlines={deadlines} />
             </YStack>
           </ScrollView>
           <Dialog.Close asChild>
             <PrimaryOutlinedButton aria-label="Close">
-              Close
+              {t("forms.buttons.close")}
             </PrimaryOutlinedButton>
           </Dialog.Close>
 

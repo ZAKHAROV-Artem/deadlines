@@ -1,4 +1,5 @@
 import { Dialog, XStack } from "tamagui";
+import { useTranslation } from "react-i18next";
 import { DIALOGS } from "@/types/enums/dialogs";
 import { useDispatch, useSelector } from "@/store/hooks";
 import { ConfirmAction } from "@/types/store/slices/dialogs";
@@ -13,6 +14,7 @@ import {
 } from "@/components/inputs/buttons/primary";
 
 export default function ConfirmActionDialog() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
     data: { onCancel = () => {}, onConfirm = () => {} },
@@ -68,18 +70,18 @@ export default function ConfirmActionDialog() {
           w={"95%"}
         >
           <Dialog.Title size={"$7"} ta={"center"}>
-            Are you sure you want to do this?
+            {t("dialogs.confirmation.areYouSure")}
           </Dialog.Title>
 
           <XStack gap="$4">
             <Dialog.Close asChild>
               <PrimaryOutlinedButton aria-label="No" f={1} onPress={onCancel}>
-                No
+                {t("dialogs.confirmation.no")}
               </PrimaryOutlinedButton>
             </Dialog.Close>
             <Dialog.Close asChild>
               <PrimaryButton aria-label="Yes" f={1} onPress={onConfirm}>
-                Yes
+                {t("dialogs.confirmation.yes")}
               </PrimaryButton>
             </Dialog.Close>
           </XStack>

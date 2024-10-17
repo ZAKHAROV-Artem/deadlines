@@ -2,6 +2,7 @@ import * as Crypto from "expo-crypto";
 import useToast from "@/hooks/use-toast";
 import { Fieldset, Input } from "tamagui";
 import { useDispatch } from "@/store/hooks";
+import { useTranslation } from "react-i18next";
 import SafeArea from "@/components/utils/safe-area";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createGroup } from "@/store/slices/groups-slice";
@@ -15,6 +16,7 @@ import {
 } from "@/types/validation/add-group";
 
 export default function AddGroup() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { control, handleSubmit, reset } = useForm<AddGroupSchemaType>({
     defaultValues: {
@@ -28,16 +30,15 @@ export default function AddGroup() {
     dispatch(
       createGroup({
         ...data,
-        deadLinesIds: [],
         id: Crypto.randomUUID(),
       }),
     );
-    success("Group created successfully");
+    success(t("groups.messages.createdSuccessfully"));
     reset();
   };
   return (
     <SafeArea childrenWrapperProps={{ gap: "$3", px: "$3" }}>
-      <ScreenHeader showLeftAction size="sm" title="Add group" />
+      <ScreenHeader showLeftAction size="sm" title={t("groups.add.title")} />
       <Fieldset gap="$3">
         <Controller
           control={control}
@@ -48,7 +49,7 @@ export default function AddGroup() {
               borderWidth={"$1"}
               br={"$6"}
               onChangeText={onChange}
-              placeholder="Title"
+              placeholder={t("forms.labels.title")}
               value={value}
             />
           )}
@@ -62,7 +63,7 @@ export default function AddGroup() {
         />
       </Fieldset>
       <PrimaryButton onPress={handleSubmit(onSubmit)} size={"$5"}>
-        Add group
+        {t("forms.buttons.add")}
       </PrimaryButton>
     </SafeArea>
   );

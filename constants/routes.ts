@@ -7,6 +7,7 @@ export enum ROUTES {
 
   HOME = "/(app)/home",
   MAIN = "/",
+  SETTINGS = "/(app)/settings",
 
   WELCOME_SCREEN = "/welcome-screen",
 }

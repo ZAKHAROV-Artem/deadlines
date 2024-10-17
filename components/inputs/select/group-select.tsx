@@ -1,5 +1,6 @@
 import { Sheet, View } from "tamagui";
 import { useSelector } from "@/store/hooks";
+import { useTranslation } from "react-i18next";
 import { Group } from "@/types/store/slices/groups";
 import { useCallback, useMemo, useState } from "react";
 import { Check, ChevronUp } from "@/components/data-display/icons";
@@ -14,6 +15,7 @@ export default function GroupSelect({
   selectedGroups,
   setSelectedGroups,
 }: SelectProps) {
+  const { t } = useTranslation();
   const groups = useSelector((state) => state.groups.groups);
   const [search, setSearch] = useState<string>("");
   const [sheetState, setSheetState] = useState({ open: false, position: 0 });
@@ -58,7 +60,7 @@ export default function GroupSelect({
           {groups
             .filter((group) => selectedGroups.includes(group.id))
             .map((group) => group.name)
-            .join(", ") || "Select value"}
+            .join(", ") || t("forms.labels.selectValue")}
         </SizableText>
         <Square animation="quick" rotate={sheetState.open ? "180deg" : "0deg"}>
           <ChevronUp />

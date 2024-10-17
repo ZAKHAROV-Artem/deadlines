@@ -4,6 +4,7 @@ import useToast from "@/hooks/use-toast";
 import { cutText } from "@/utils/helpers";
 import { ROUTES } from "@/constants/routes";
 import { useDispatch } from "@/store/hooks";
+import { useTranslation } from "react-i18next";
 import { DIALOGS } from "@/types/enums/dialogs";
 import { Deadline } from "@/types/store/slices/deadlines";
 import { Edit, Trash } from "@/components/data-display/icons";
@@ -19,6 +20,7 @@ type DeadlineItemProps = {
 };
 export default function DeadlineItem({ deadline, onPress }: DeadlineItemProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
   const progress = useCountProgress(deadline.createdAt, deadline.due);
   const { success } = useToast();
   const dispatch = useDispatch();
@@ -30,7 +32,7 @@ export default function DeadlineItem({ deadline, onPress }: DeadlineItemProps) {
           onCancel: () => {},
           onConfirm: () => {
             dispatch(deleteDeadline(deadline.id));
-            success("Deadline deleted");
+            success(t("deadlines.messages.deleted"));
           },
         },
         dialogName: DIALOGS.CONFIRM_ACTION,
@@ -75,7 +77,8 @@ export default function DeadlineItem({ deadline, onPress }: DeadlineItemProps) {
         <YStack>
           <H4>{cutText(deadline.title, 20)}</H4>
           <SizableText>
-            Due: {format(deadline.due, "MMMM dd, yyyy HH:mm")}
+            {t("forms.labels.due")}:{" "}
+            {format(deadline.due, "MMMM dd, yyyy HH:mm")}
           </SizableText>
         </YStack>
         <XStack gap="$2">

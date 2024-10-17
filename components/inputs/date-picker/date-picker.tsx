@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 import DateTimePicker from "react-native-ui-datepicker";
 import { CalendarDates, X } from "@/components/data-display/icons";
 import {
@@ -26,6 +27,7 @@ export default function DatePicker({
   setDate,
   withTime = false,
 }: DatePickerProps) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState<boolean>(false);
   const [localDate, setLocalDate] = useState<Date>(date);
 
@@ -83,9 +85,7 @@ export default function DatePicker({
           w={"95%"}
         >
           <Dialog.Title>{format(date, "MMMM dd , yyyy")}</Dialog.Title>
-          <Dialog.Description>
-            Pick up the date. Click save when you're done.
-          </Dialog.Description>
+          <Dialog.Description>{t("dialogs.pickers.date")}</Dialog.Description>
           <DateTimePicker
             date={localDate}
             firstDayOfWeek={1}
@@ -101,12 +101,12 @@ export default function DatePicker({
           <XStack gap="$3">
             <Dialog.Close asChild>
               <PrimaryOutlinedButton aria-label="Close" f={1}>
-                Cancel
+                {t("forms.buttons.close")}
               </PrimaryOutlinedButton>
             </Dialog.Close>
             <Dialog.Close asChild>
               <PrimaryButton aria-label="Save" f={1} onPress={handleSave}>
-                Save changes
+                {t("forms.buttons.save")}
               </PrimaryButton>
             </Dialog.Close>
           </XStack>

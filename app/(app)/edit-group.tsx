@@ -1,4 +1,5 @@
 import useToast from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { useLocalSearchParams } from "expo-router";
 import SafeArea from "@/components/utils/safe-area";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +16,7 @@ import {
 } from "@/types/validation/add-group";
 
 export default function EditGroup() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams();
   const group = useSelector((state) =>
     state.groups.groups.find((group) => group.id === id),
@@ -35,12 +37,16 @@ export default function EditGroup() {
         id: group?.id as string,
       }),
     );
-    success("Group updated successfully");
+    success(t("groups.messages.updatedSuccessfully"));
   };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeArea childrenWrapperProps={{ gap: "$6", px: "$3" }}>
-        <ScreenHeader showLeftAction size="sm" title="Update group" />
+        <ScreenHeader
+          showLeftAction
+          size="sm"
+          title={t("groups.update.title")}
+        />
         <Fieldset gap="$3">
           <Controller
             control={control}
@@ -51,7 +57,7 @@ export default function EditGroup() {
                 borderWidth={"$1"}
                 br={"$6"}
                 onChangeText={onChange}
-                placeholder="Title"
+                placeholder={t("forms.labels.title")}
                 value={value}
               />
             )}
@@ -68,7 +74,7 @@ export default function EditGroup() {
           />
         </Fieldset>
         <PrimaryButton onPress={handleSubmit(onSubmit)} size={"$5"}>
-          Save changes
+          {t("forms.buttons.save")}
         </PrimaryButton>
       </SafeArea>
     </ScrollView>

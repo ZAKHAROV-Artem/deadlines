@@ -1,13 +1,16 @@
 import { useState } from "react";
 import Constants from "expo-constants";
 import LottieView from "lottie-react-native";
+import { useTranslation } from "react-i18next";
 import { GroupItem } from "@/components/groups";
 import SafeArea from "@/components/utils/safe-area";
 import { DeadlinesList } from "@/components/deadlines";
 import { useDispatch, useSelector } from "@/store/hooks";
 import { H3, Image, ScrollView, XStack, YStack } from "tamagui";
 import { setIsShown } from "@/store/slices/welcome-screen-slice";
+
 export default function Index() {
+  const { t } = useTranslation(undefined, { keyPrefix: "deadlines" });
   const dispatch = useDispatch();
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const groups = useSelector((state) => state.groups.groups);
@@ -63,7 +66,9 @@ export default function Index() {
               </XStack>
             </ScrollView>
             <XStack jc="space-between">
-              <H3 onPress={() => dispatch(setIsShown(true))}>Deadlines</H3>
+              <H3 onPress={() => dispatch(setIsShown(true))}>
+                {t("deadlines")}
+              </H3>
               <H3>{selectedDeadlines.length}</H3>
             </XStack>
             <DeadlinesList deadlines={selectedDeadlines} />

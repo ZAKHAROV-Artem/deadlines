@@ -1,6 +1,7 @@
 import * as Crypto from "expo-crypto";
 import useToast from "@/hooks/use-toast";
 import { useDispatch } from "@/store/hooks";
+import { useTranslation } from "react-i18next";
 import SafeArea from "@/components/utils/safe-area";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DatePicker } from "@/components/inputs/date-picker";
@@ -17,6 +18,7 @@ import {
 } from "@/types/validation/add-deadline";
 
 export default function AddDeadline() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { control, handleSubmit, reset } = useForm<AddDeadlineSchemaType>({
     defaultValues: {
@@ -38,16 +40,20 @@ export default function AddDeadline() {
         id: Crypto.randomUUID(),
       }),
     );
-    success("Deadline created successfully");
+    success(t("deadlines.messages.createdSuccessfully"));
     reset();
   };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeArea childrenWrapperProps={{ gap: "$6", px: "$3" }}>
-        <ScreenHeader showLeftAction size="sm" title="Add deadline" />
+        <ScreenHeader
+          showLeftAction
+          size="sm"
+          title={t("deadlines.add.title")}
+        />
         <YStack gap="$5">
           <Fieldset gap="$3">
-            <H4>Title</H4>
+            <H4>{t("forms.labels.title")}</H4>
             <Controller
               control={control}
               name="title"
@@ -57,13 +63,13 @@ export default function AddDeadline() {
                   borderWidth={"$1"}
                   br={"$6"}
                   onChangeText={onChange}
-                  placeholder="Title"
+                  placeholder={t("forms.labels.title")}
                   value={value}
                 />
               )}
             />
 
-            <H4>Due datetime</H4>
+            <H4>{t("forms.labels.due")}</H4>
             <Controller
               control={control}
               name="due"
@@ -75,7 +81,7 @@ export default function AddDeadline() {
                 />
               )}
             />
-            <H4>Groups</H4>
+            <H4>{t("forms.labels.groups")}</H4>
             <Controller
               control={control}
               name="groupIds"
@@ -86,7 +92,7 @@ export default function AddDeadline() {
                 />
               )}
             />
-            <H4>Color</H4>
+            <H4>{t("forms.labels.color")}</H4>
             <Controller
               control={control}
               name="color"
@@ -97,7 +103,7 @@ export default function AddDeadline() {
                 />
               )}
             />
-            <H4>Description</H4>
+            <H4>{t("forms.labels.description")}</H4>
             <Controller
               control={control}
               name="description"
@@ -107,14 +113,14 @@ export default function AddDeadline() {
                   borderWidth={"$1"}
                   br={"$6"}
                   onChangeText={onChange}
-                  placeholder="Description"
+                  placeholder={t("forms.labels.description")}
                   value={value}
                 />
               )}
             />
           </Fieldset>
           <PrimaryButton onPress={handleSubmit(onSubmit)} size={"$5"}>
-            Add deadline
+            {t("forms.buttons.add")}
           </PrimaryButton>
         </YStack>
       </SafeArea>

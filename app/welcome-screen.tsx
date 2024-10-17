@@ -2,12 +2,14 @@ import { router } from "expo-router";
 import { ROUTES } from "@/constants/routes";
 import { useDispatch } from "@/store/hooks";
 import { ImageBackground } from "react-native";
+import { useTranslation } from "react-i18next";
 import SafeArea from "@/components/utils/safe-area";
 import { ArrowRight } from "@/components/data-display/icons";
 import { setIsShown } from "@/store/slices/welcome-screen-slice";
 import { Button, H1, SizableText, XStack, YStack } from "tamagui";
 
 export default function WelcomeScreen() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const handleGetStarted = () => {
     dispatch(setIsShown(true));
@@ -22,14 +24,14 @@ export default function WelcomeScreen() {
       <SafeArea pure>
         <YStack ai={"center"} gap="$4" h={"90%"} jc={"center"} px="$4" py="$4">
           <YStack>
-            <H1 color={"$textPrimary"}>Deadlines</H1>
+            <H1 color={"$textPrimary"}>{t("deadlines.deadlines")}</H1>
             <SizableText
               color={"$textPrimary"}
               fontStyle="italic"
               size="$6"
               ta={"center"}
             >
-              {`Innovative, user-friendly,\nand easy.`}
+              {t("welcomeScreen.title")}
             </SizableText>
           </YStack>
           <Button
@@ -41,7 +43,7 @@ export default function WelcomeScreen() {
             size={"$6"}
           >
             <XStack ai={"center"} gap="$3">
-              <SizableText>Get started</SizableText>
+              <SizableText>{t("welcomeScreen.getStarted")}</SizableText>
               <ArrowRight />
             </XStack>
           </Button>

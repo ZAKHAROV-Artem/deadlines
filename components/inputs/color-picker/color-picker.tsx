@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { colors } from "@/constants/colors";
+import { useTranslation } from "react-i18next";
 import { X } from "@/components/data-display/icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
@@ -32,6 +33,7 @@ type DatePickerProps = {
 };
 
 export default function ColorPicker({ color, setColor }: DatePickerProps) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState<boolean>(false);
   const handleClose = () => setOpen(false);
 
@@ -108,9 +110,7 @@ export default function ColorPicker({ color, setColor }: DatePickerProps) {
           >
             {localColor}
           </Dialog.Title>
-          <Dialog.Description>
-            Pick up the color. Click save when you're done.
-          </Dialog.Description>
+          <Dialog.Description>{t("dialogs.pickers.color")}</Dialog.Description>
           <ReanimatedColorPicker
             onComplete={(colors) =>
               setValue("color", colors.hex, { shouldValidate: true })
@@ -161,7 +161,7 @@ export default function ColorPicker({ color, setColor }: DatePickerProps) {
           <XStack gap="$3">
             <Dialog.Close asChild>
               <PrimaryOutlinedButton aria-label="Close" f={1}>
-                Cancel
+                {t("forms.buttons.cancel")}
               </PrimaryOutlinedButton>
             </Dialog.Close>
             <PrimaryButton
@@ -169,7 +169,7 @@ export default function ColorPicker({ color, setColor }: DatePickerProps) {
               f={1}
               onPress={handleSubmit(onSubmit)}
             >
-              Save
+              {t("forms.buttons.save")}
             </PrimaryButton>
           </XStack>
 

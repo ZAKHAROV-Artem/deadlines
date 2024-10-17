@@ -1,4 +1,5 @@
 import useToast from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { useLocalSearchParams } from "expo-router";
 import SafeArea from "@/components/utils/safe-area";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +18,7 @@ import {
 } from "@/types/validation/add-deadline";
 
 export default function EditDeadline() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams();
   const deadline = useSelector((state) =>
     state.deadlines.deadlines.find((deadline) => deadline.id === id),
@@ -43,15 +45,19 @@ export default function EditDeadline() {
         id: deadline?.id as string,
       }),
     );
-    success("Deadline updated successfully");
+    success(t("deadlines.messages.updatedSuccessfully"));
   };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <SafeArea childrenWrapperProps={{ gap: "$6", px: "$3" }}>
-        <ScreenHeader showLeftAction size="sm" title="Update deadline" />
+        <ScreenHeader
+          showLeftAction
+          size="sm"
+          title={t("deadlines.update.title")}
+        />
         <YStack gap="$5">
           <Fieldset gap="$3">
-            <H4>Title</H4>
+            <H4>{t("forms.labels.title")}</H4>
             <Controller
               control={control}
               name="title"
@@ -61,13 +67,13 @@ export default function EditDeadline() {
                   borderWidth={"$1"}
                   br={"$6"}
                   onChangeText={onChange}
-                  placeholder="Title"
+                  placeholder={t("forms.labels.title")}
                   value={value}
                 />
               )}
             />
 
-            <H4>Due datetime</H4>
+            <H4>{t("forms.labels.due")}</H4>
             <Controller
               control={control}
               name="due"
@@ -79,7 +85,7 @@ export default function EditDeadline() {
                 />
               )}
             />
-            <H4>Groups</H4>
+            <H4>{t("forms.labels.groups")}</H4>
             <Controller
               control={control}
               name="groupIds"
@@ -90,7 +96,7 @@ export default function EditDeadline() {
                 />
               )}
             />
-            <H4>Color</H4>
+            <H4>{t("forms.labels.color")}</H4>
             <Controller
               control={control}
               name="color"
@@ -101,7 +107,7 @@ export default function EditDeadline() {
                 />
               )}
             />
-            <H4>Description</H4>
+            <H4>{t("forms.labels.description")}</H4>
             <Controller
               control={control}
               name="description"
@@ -111,14 +117,14 @@ export default function EditDeadline() {
                   borderWidth={"$1"}
                   br={"$6"}
                   onChangeText={onChange}
-                  placeholder="Description"
+                  placeholder={t("forms.labels.description")}
                   value={value}
                 />
               )}
             />
           </Fieldset>
           <PrimaryButton onPress={handleSubmit(onSubmit)} size={"$5"}>
-            Save changes
+            {t("forms.buttons.save")}
           </PrimaryButton>
         </YStack>
       </SafeArea>
